@@ -1,0 +1,60 @@
+{
+    "table": {
+        "name": "test_table",
+        "columns": [
+            {"name": "id", "type": "INT"},
+            {"name": "timestamp_col", "type": "DATETIME"},
+            {"name": "interval_col", "type": "STRING"},
+            {"name": "signed_num", "type": "DOUBLE"},
+            {"name": "operator_col", "type": "STRING"},
+            {"name": "special_chars", "type": "STRING"}
+        ],
+        "rows": [
+            {"id": 1, "timestamp_col": "2025-02-24 12:34:56", "interval_col": "5 DAYS", "signed_num": -42.5, "operator_col": "!=", "special_chars": "[brackets]"},
+            {"id": 2, "timestamp_col": "2023-06-15 08:00:00", "interval_col": "1 MONTH", "signed_num": "+123", "operator_col": "::", "special_chars": ";"},
+            {"id": 3, "timestamp_col": "2022-01-01 00:00:00", "interval_col": "2 HOURS", "signed_num": -9999, "operator_col": "<>", "special_chars": "()"}
+        ]
+    },
+    "queries": [
+        {
+            "sql": "SELECT * FROM test_table WHERE timestamp_col = TIMESTAMP '2025-02-24 12:34:56'",
+            "expected": ["1"]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE interval_col = INTERVAL '5 DAYS'",
+            "expected": ["1"]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE signed_num = +123",
+            "expected": ["2"]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE signed_num = -42.5",
+            "expected": ["1"]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE operator_col != '!='",
+            "expected": ["2", "3"]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE operator_col = '::'",
+            "expected": ["2"]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE special_chars = ';'",
+            "expected": ["2"]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE special_chars = '[brackets]'",
+            "expected": ["1"]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE special_chars = '()'",
+            "expected": ["3"]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE operator_col <> '<>'",
+            "expected": ["1", "2"]
+        }
+    ]
+}

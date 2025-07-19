@@ -1,0 +1,85 @@
+{
+  "table": {
+    "name": "my_table",
+    "columns": [
+      { "name": "id", "type": "STRING" },
+      { "name": "integration_type", "type": "STRING" },
+      { "name": "created_time", "type": "DATETIME" },
+      { "name": "num_bytes", "type": "INT" },
+      { "name": "status", "type": "STRING" }
+    ],
+    "rows": [
+      { "id": "abc123", "integration_type": "CHAT_TOOL", "created_time": 1692654952, "num_bytes": 1024, "status": "active" },
+      { "id": "def999", "integration_type": "GMAIL", "created_time": 1692655000, "num_bytes": 50, "status": "inactive" },
+      { "id": "xxx111", "integration_type": "ZOOM", "created_time": 1692656000, "num_bytes": 700, "status": null },
+      { "id": "zzz789", "integration_type": "CHAT_TOOL", "created_time": 1692654000, "num_bytes": 200, "status": "pending" }
+    ]
+  },
+  "queries": [
+    {
+      "sql": "SELECT * FROM my_table WHERE num_bytes BETWEEN 100 AND 700",
+      "expected": ["xxx111", "zzz789"],
+      "explanation": "Ensures BETWEEN range filtering works correctly."
+    },
+    {
+      "sql": "SELECT * FROM my_table WHERE num_bytes BETWEEN 50 AND 50",
+      "expected": ["def999"],
+      "explanation": "Checks BETWEEN for an exact match."
+    },
+    {
+      "sql": "SELECT * FROM my_table WHERE status IS NULL",
+      "expected": ["xxx111"],
+      "explanation": "Ensures NULL filtering works."
+    },
+    {
+      "sql": "SELECT * FROM my_table WHERE status IS NOT NULL",
+      "expected": ["abc123", "zzz789", "def999"],
+      "explanation": "Ensures IS NOT NULL works correctly."
+    },
+    {
+      "sql": "SELECT * FROM my_table WHERE integration_type LIKE 'S%'",
+      "expected": ["abc123", "zzz789"],
+      "explanation": "Ensures LIKE prefix filtering works."
+    },
+    {
+      "sql": "SELECT * FROM my_table WHERE integration_type LIKE '%M%'",
+      "expected": ["def999", "xxx111"],
+      "explanation": "Ensures LIKE with a substring match."
+    },
+    {
+      "sql": "SELECT * FROM my_table WHERE integration_type NOT LIKE 'S%'",
+      "expected": ["def999", "xxx111"],
+      "explanation": "Ensures NOT LIKE correctly excludes values."
+    },
+    {
+      "sql": "SELECT * FROM my_table WHERE num_bytes + 100 > 1100",
+      "expected": ["abc123"],
+      "explanation": "Ensures arithmetic expressions in WHERE work."
+    },
+    {
+      "sql": "SELECT * FROM my_table WHERE num_bytes * 2 = 1400",
+      "expected": ["xxx111"],
+      "explanation": "Ensures multiplication in WHERE works."
+    },
+    {
+      "sql": "SELECT * FROM my_table WHERE num_bytes / 2 = 25",
+      "expected": ["def999"],
+      "explanation": "Ensures division in WHERE works."
+    },
+    {
+      "sql": "SELECT * FROM my_table WHERE (integration_type = 'CHAT_TOOL') AND (num_bytes > 500)",
+      "expected": ["abc123"],
+      "explanation": "Ensures AND logic in WHERE clause."
+    },
+    {
+      "sql": "SELECT * FROM my_table WHERE NOT (integration_type = 'CHAT_TOOL' OR num_bytes < 700)",
+      "expected": ["xxx111"],
+      "explanation": "Ensures NOT applies correctly across conditions."
+    },
+    {
+      "sql": "SELECT * FROM my_table WHERE integration_type = ''",
+      "expected": [],
+      "explanation": "Ensures empty strings don’t match NULL."
+    }
+  ]
+}

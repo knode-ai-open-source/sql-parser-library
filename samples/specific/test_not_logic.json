@@ -1,0 +1,51 @@
+{
+    "table": {
+        "name": "my_table",
+        "columns": [
+            {
+                "name": "id",
+                "type": "STRING"
+            },
+            {
+                "name": "category",
+                "type": "STRING"
+            },
+            {
+                "name": "num_bytes",
+                "type": "INT"
+            }
+        ],
+        "rows": [
+            {
+                "id": "1",
+                "category": "A",
+                "num_bytes": 300
+            },
+            {
+                "id": "2",
+                "category": "B",
+                "num_bytes": 1024
+            },
+            {
+                "id": "3",
+                "category": "C",
+                "num_bytes": 50
+            }
+        ]
+    },
+    "queries": [
+        {
+            "sql": "SELECT * FROM my_table WHERE NOT category = 'A'",
+            "expected": [
+                "2",
+                "3"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM my_table WHERE NOT (num_bytes > 1000 OR category = 'C')",
+            "expected": [
+                "1"
+            ]
+        }
+    ]
+}

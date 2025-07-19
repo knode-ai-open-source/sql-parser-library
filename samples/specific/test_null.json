@@ -1,0 +1,57 @@
+{
+    "table": {
+        "name": "my_table",
+        "columns": [
+            {
+                "name": "id",
+                "type": "STRING"
+            },
+            {
+                "name": "status",
+                "type": "STRING"
+            },
+            {
+                "name": "remarks",
+                "type": "STRING"
+            }
+        ],
+        "rows": [
+            {
+                "id": "1",
+                "status": "active",
+                "remarks": null
+            },
+            {
+                "id": "2",
+                "status": "inactive",
+                "remarks": "Needs Review"
+            },
+            {
+                "id": "3",
+                "status": null,
+                "remarks": "Pending"
+            }
+        ]
+    },
+    "queries": [
+        {
+            "sql": "SELECT * FROM my_table WHERE status IS NULL",
+            "expected": [
+                "3"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM my_table WHERE status IS NOT NULL",
+            "expected": [
+                "1",
+                "2"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM my_table WHERE remarks IS NULL",
+            "expected": [
+                "1"
+            ]
+        }
+    ]
+}

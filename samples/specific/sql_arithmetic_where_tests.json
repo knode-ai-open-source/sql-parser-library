@@ -1,0 +1,121 @@
+{
+    "table": {
+        "name": "test_table",
+        "columns": [
+            {
+                "name": "id",
+                "type": "INT"
+            },
+            {
+                "name": "num_int",
+                "type": "INT"
+            },
+            {
+                "name": "num_double",
+                "type": "DOUBLE"
+            },
+            {
+                "name": "str_val",
+                "type": "STRING"
+            },
+            {
+                "name": "datetime_val",
+                "type": "DATETIME"
+            }
+        ],
+        "rows": [
+            {
+                "id": 1,
+                "num_int": 10,
+                "num_double": 10.5,
+                "str_val": "Hello",
+                "datetime_val": 1700000000
+            },
+            {
+                "id": 2,
+                "num_int": 20,
+                "num_double": 20.5,
+                "str_val": "World",
+                "datetime_val": 1700003600
+            },
+            {
+                "id": 3,
+                "num_int": 30,
+                "num_double": 30.5,
+                "str_val": "Foo",
+                "datetime_val": 1700007200
+            },
+            {
+                "id": 4,
+                "num_int": null,
+                "num_double": null,
+                "str_val": null,
+                "datetime_val": null
+            }
+        ]
+    },
+    "queries": [
+        {
+            "sql": "SELECT * FROM test_table WHERE num_int + 5 = 15",
+            "expected": [
+                "1"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE num_double - 0.5 = 10",
+            "expected": [
+                "1"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE num_int * 2 = 40",
+            "expected": [
+                "2"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE num_int / 10 = 3",
+            "expected": [
+                "3"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE str_val + ' World' = 'Hello World'",
+            "expected": [
+                "1"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE datetime_val + 1 = 1700086400",
+            "expected": [
+                "1"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE datetime_val - 1 = 1699913600",
+            "expected": [
+                "1"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE datetime_val - datetime_val = 0",
+            "expected": [
+                "1",
+                "2",
+                "3"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE datetime_val + INTERVAL '1 day' = 1700086400",
+            "expected": [
+                "1"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM test_table WHERE datetime_val - INTERVAL '1 day' = 1699913600",
+            "expected": [
+                "1"
+            ]
+        }
+    ]
+}

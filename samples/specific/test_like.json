@@ -1,0 +1,50 @@
+{
+    "table": {
+        "name": "my_table",
+        "columns": [
+            {
+                "name": "id",
+                "type": "STRING"
+            },
+            {
+                "name": "name",
+                "type": "STRING"
+            }
+        ],
+        "rows": [
+            {
+                "id": "1",
+                "name": "Alice"
+            },
+            {
+                "id": "2",
+                "name": "Bob"
+            },
+            {
+                "id": "3",
+                "name": "Alfred"
+            }
+        ]
+    },
+    "queries": [
+        {
+            "sql": "SELECT * FROM my_table WHERE name LIKE 'A%'",
+            "expected": [
+                "1",
+                "3"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM my_table WHERE name LIKE '_o%'",
+            "expected": [
+                "2"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM my_table WHERE name LIKE 'A_____%%'",
+            "expected": [
+                "3"
+            ]
+        }
+    ]
+}

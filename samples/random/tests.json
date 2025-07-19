@@ -1,0 +1,39 @@
+{
+  "table": {
+    "name": "my_table",
+    "columns": [
+      { "name": "id", "type": "STRING" },
+      { "name": "integration_type", "type": "STRING" },
+      { "name": "created_time", "type": "DATETIME" },
+      { "name": "num_bytes", "type": "INT" }
+    ],
+    "rows": [
+      {
+        "id": "abc123",
+        "integration_type": "CHAT_TOOL",
+        "created_time": 1692654952,
+        "num_bytes": 1024
+      },
+      {
+        "id": "def999",
+        "integration_type": "GMAIL",
+        "created_time": 1692655000,
+        "num_bytes": 50
+      }
+    ]
+  },
+  "queries": [
+    {
+      "sql": "SELECT * FROM my_table WHERE num_bytes > 500",
+      "expected": ["abc123"]
+    },
+    {
+      "sql": "SELECT * FROM my_table WHERE integration_type = 'CHAT_TOOL'",
+      "expected": ["abc123"]
+    },
+    {
+      "sql": "SELECT * FROM my_table WHERE num_bytes < 100",
+      "expected": ["def999"]
+    }
+  ]
+}

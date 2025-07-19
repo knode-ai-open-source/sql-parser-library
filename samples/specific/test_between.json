@@ -1,0 +1,65 @@
+{
+    "table": {
+        "name": "my_table",
+        "columns": [
+            {
+                "name": "id",
+                "type": "STRING"
+            },
+            {
+                "name": "name",
+                "type": "STRING"
+            },
+            {
+                "name": "created_time",
+                "type": "DATETIME"
+            },
+            {
+                "name": "num_bytes",
+                "type": "INT"
+            }
+        ],
+        "rows": [
+            {
+                "id": "1",
+                "name": "Alice",
+                "created_time": 1692654000,
+                "num_bytes": 300
+            },
+            {
+                "id": "2",
+                "name": "Bob",
+                "created_time": 1692654952,
+                "num_bytes": 700
+            },
+            {
+                "id": "3",
+                "name": "Charlie",
+                "created_time": 1692656000,
+                "num_bytes": 50
+            }
+        ]
+    },
+    "queries": [
+        {
+            "sql": "SELECT * FROM my_table WHERE num_bytes BETWEEN 100 AND 700",
+            "expected": [
+                "1",
+                "2"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM my_table WHERE num_bytes NOT BETWEEN 100 AND 700",
+            "expected": [
+                "3"
+            ]
+        },
+        {
+            "sql": "SELECT * FROM my_table WHERE created_time BETWEEN 1692654000 AND 1692655000",
+            "expected": [
+                "1",
+                "2"
+            ]
+        }
+    ]
+}

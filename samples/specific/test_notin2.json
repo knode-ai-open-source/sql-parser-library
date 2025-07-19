@@ -1,0 +1,40 @@
+{
+  "table": {
+    "name": "documents",
+    "columns": [
+      { "name": "id", "type": "STRING" },
+      { "name": "integration_type", "type": "STRING" },
+      { "name": "group_id", "type": "STRING" }
+    ],
+    "rows": [
+      { "id": "1", "integration_type": "GMAIL",     "group_id": "GROUP_A" },
+      { "id": "2", "integration_type": "GMAIL",     "group_id": "GROUP_B" },
+      { "id": "3", "integration_type": "CHAT_TOOL", "group_id": "GROUP_A" },
+      { "id": "4", "integration_type": "GMAIL" },
+      { "id": "5", "integration_type": "DROPBOX",   "group_id": "GROUP_A" },
+      { "id": "6", "integration_type": "GMAIL" }
+    ]
+  },
+  "queries": [
+    {
+      "sql": "SELECT * FROM documents WHERE integration_type = 'GMAIL' AND group_id NOT IN ('GROUP_A')",
+      "expected": ["2", "4", "6"]
+    },
+    {
+      "sql": "SELECT * FROM documents WHERE integration_type = 'GMAIL' AND (group_id IS NULL OR group_id NOT IN ('GROUP_A'))",
+      "expected": ["2", "4", "6"]
+    },
+    {
+      "sql": "SELECT * FROM documents WHERE group_id NOT IN ('GROUP_A')",
+      "expected": ["2", "4", "6"]
+    },
+    {
+      "sql": "SELECT * FROM documents WHERE integration_type = 'GMAIL'",
+      "expected": ["1", "2", "4", "6"]
+    },
+    {
+      "sql": "SELECT * FROM documents WHERE group_id NOT IN ('GROUP_A', 'GROUP_B')",
+      "expected": ["4", "6"]
+    }
+  ]
+}
