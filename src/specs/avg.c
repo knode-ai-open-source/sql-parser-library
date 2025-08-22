@@ -1,6 +1,7 @@
-// SPDX-FileCopyrightText: 2024-2025 Knode.ai
+// SPDX-FileCopyrightText: 2025 Andy Curtis <contactandyc@gmail.com>
+// SPDX-FileCopyrightText: 2024–2025 Knode.ai — technical questions: contact Andy (above)
 // SPDX-License-Identifier: Apache-2.0
-// Maintainer: Andy Curtis <contactandyc@gmail.com>
+
 #include "sql-parser-library/sql_ctx.h"
 
 static sql_node_t *sql_func_avg(sql_ctx_t *ctx, sql_node_t *f) {
